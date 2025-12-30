@@ -8,12 +8,9 @@ import math
 class PDEBlock(nn.Module):
     
     #PDE-inspired Diffusion Block for Haze Removal
-
     #Applies a physics-motivated step based on the diffusion equation:
     #    x_{t+1} = x_t + Δt · div(grad(x_t))
-
     #Which models the "smoothing" or "diffusing" of haze using Laplacian.
-    
     def __init__(self, channels, step_size=0.1, use_gate=True):
         super(PDEBlock, self).__init__()
         self.channels = channels
@@ -32,25 +29,15 @@ class PDEBlock(nn.Module):
         
         #x: (B, C, H, W) feature map
         #Returns: (B, C, H, W) updated map with diffused features
-        
-
         # Compute gradients (finite differences)
         grad_x = x[:, :, :, 1:] - x[:, :, :, :-1]  # (B, C, H, W-1)
         grad_y = x[:, :, 1:, :] - x[:, :, :-1, :]  # (B, C, H-1, W)
-
-        # Pad to match original size
         grad_x = F.pad(grad_x, (0, 1, 0, 0))  # pad W dim
         grad_y = F.pad(grad_y, (0, 0, 0, 1))  # pad H dim
-
-        # Compute divergence (negative Laplacian-like effect)
         div_x = grad_x[:, :, :, :-1] - grad_x[:, :, :, 1:]
         div_y = grad_y[:, :, :-1, :] - grad_y[:, :, 1:, :]
-
-        # Pad to match
         div_x = F.pad(div_x, (1, 0, 0, 0))  # pad left
         div_y = F.pad(div_y, (0, 0, 1, 0))  # pad top
-
-        # Combine divergence
         laplacian = div_x + div_y  # shape: (B, C, H, W)
 
         # Optionally apply gate
@@ -59,12 +46,9 @@ class PDEBlock(nn.Module):
             update = gate_map * laplacian
         else:
             update = laplacian
-
         # PDE update: x_{t+1} = x_t + Δt · laplacian
         x_next = x + self.step_size * update
-
         return x_next
-
 
 # --------- small utilities ---------
 class LayerNorm2d(nn.Module):
@@ -84,7 +68,6 @@ def nhwc(x):  # (N, C, H, W) -> (N, H, W, C)
     return x.permute(0, 2, 3, 1).contiguous()
 def nchw(x):  # (N, H, W, C) -> (N, C, H, W)
     return x.permute(0, 3, 1, 2).contiguous()
-
 
 # --------- optional Mamba import ---------
 _has_mamba = False
@@ -202,10 +185,8 @@ class MD_SSB(nn.Module):
         # Local preconditioning
         y = self.norm1(x)
         y = self.dw(y)
-
         # Channels-last for faster sequence ops
         y = nhwc(y)  # (N,H,W,C)
-
         outs = []
         if 'lr' in self.directions: outs.append(self._scan_lr(y))
         if 'rl' in self.directions: outs.append(self._scan_rl(y))
@@ -221,7 +202,6 @@ class MD_SSB(nn.Module):
         y = self.fuse(y)
         y = self.drop(y)
         x = x + y                                        # residual 1
-
         # FFGN
         z = self.norm2(x)
         z = self.ffgn(z)
@@ -292,7 +272,6 @@ class DSC(nn.Module):
         self.norm1 = nn.BatchNorm2d(dim)
         self.norm2 = nn.BatchNorm2d(dim)
         self.dim = dim
-
         # shallow feature extraction layer
         self.conv1 = nn.Conv2d(dim, dim, kernel_size=1) # main
         self.conv2 = nn.Conv2d(dim, dim, kernel_size=5, padding=2, groups=dim, padding_mode='reflect') # main
@@ -306,7 +285,7 @@ class DSC(nn.Module):
             use_sum_fusion=True, ff_mult=2, drop=0.0
         )
 
-        #self.rmdb = RMDB(dim, dim)
+        self.rmdb = RMDB(dim, dim)
         
         self.mlp  = Mlp(network_depth, dim, hidden_features=int(dim*4.), out_features=dim)
         self.mlp2 = Mlp(network_depth, dim, hidden_features=int(dim*4.), out_features=dim)
@@ -320,13 +299,13 @@ class DSC(nn.Module):
         x = self.mlp(x)
         x = identity + x
 
-        # MS_SSB and RMD Block
+        # MD_SSB and RMD Block
         identity = x
         x = self.norm2(x)
         x = self.conv1(x)
         x = self.conv2(x)
-        attn = torch.cat([self.md_ssb(x)], dim=1)
-        #attn = torch.cat([self.md_ssb(x), self.rmdb(x)], dim=1)
+        #attn = torch.cat([self.md_ssb(x)], dim=1)
+        attn = torch.cat([self.md_ssb(x), self.rmdb(x)], dim=1)
         x = self.mlp2(attn)
         x = identity + x
         return x
@@ -430,13 +409,13 @@ class DSCH_Net_model(nn.Module):
         self.patch_split1 = PatchUnEmbed(
             patch_size=2, out_chans=embed_dims[3], embed_dim=embed_dims[2])
         assert embed_dims[1] == embed_dims[3]
-        self.sfgm1 = SFGM(embed_dims[3])  # Replace SKFusion with SFGM, which is defined in the code
+        self.sfgm1 = SFGM(embed_dims[3]) 
         self.layer4 = BasicLayer(dim=embed_dims[3], depth=depths[3], network_depth=sum(depths))
 
         self.patch_split2 = PatchUnEmbed(
             patch_size=2, out_chans=embed_dims[4], embed_dim=embed_dims[3])
         assert embed_dims[0] == embed_dims[4]
-        self.sfgm2 = SFGM(embed_dims[4])  # Replace SKFusion with SFGM, which is defined in the code
+        self.sfgm2 = SFGM(embed_dims[4])  
         self.layer5 = BasicLayer(dim=embed_dims[4], depth=depths[4], network_depth=sum(depths))
         self.patch_unembed = PatchUnEmbed(
             patch_size=1, out_chans=out_chans, embed_dim=embed_dims[4], kernel_size=1)
@@ -449,36 +428,28 @@ class DSCH_Net_model(nn.Module):
         return x
 	
     def forward_features(self, x):
-
         x = self.patch_embed(x)
         x = self.layer1(x)
         skip1 = x
-
         x = self.patch_merge1(x)
         x = self.layer2(x)
         skip2 = x
-
         x = self.patch_merge2(x)
         x = self.layer3(x)
         x = self.patch_split1(x)
-
         x = self.sfgm1([x, self.skip2(skip2)]) + x
         x = self.layer4(x)
         x = self.patch_split2(x)
-
         x = self.sfgm2([x, self.skip1(skip1)]) + x
         x = self.layer5(x)
         x = self.patch_unembed(x)
-
         return x
 
 
     def forward(self, x):
         H, W = x.shape[2:]
         x = self.check_image_size(x)
-        
         feat = self.forward_features(x)
-        
         K, B = torch.split(feat, (1, 3), dim=1)
         x = K * x - B + x
         x = x[:, :, :H, :W]
