@@ -51,7 +51,7 @@ pip install -r requirements.txt
 
 The proposed model is trained and evaluated on multiple publicly available remote-sensing image-dehazing datasets. Please download the datasets from the official sources provided below.
 
-### 🌫️ Remote Sensing Image Dehazing Dataset (RSID)
+### Remote Sensing Image Dehazing Dataset (RSID)
 - Repository: https://github.com/chi-kaichen/Trinity-Net  
 - Description: A widely used dataset for remote sensing image dehazing, containing paired hazy and clear images.
 
