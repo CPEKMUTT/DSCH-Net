@@ -47,6 +47,35 @@ conda activate dsch-net
 pip install -r requirements.txt
 ```
 
+## Dataset
+
+The proposed model is trained and evaluated on multiple publicly available remote-sensing image-dehazing datasets. Please download the datasets from the official sources provided below.
+
+### 🌫️ Remote Sensing Image Dehazing Dataset (RSID)
+- Repository: https://github.com/chi-kaichen/Trinity-Net  
+- Description: A widely used dataset for remote sensing image dehazing, containing paired hazy and clear images.
+
+---
+
+### Remote Sensing Image Cloud Removing Dataset (RICE)
+- Repository: https://github.com/BUPTLdy/RICE_DATASET  
+- Description: A cloud removal dataset designed for remote sensing applications with paired cloudy and cloud-free images.
+
+---
+
+### SateHaze1K
+- Link: https://www.kaggle.com/datasets/mohit3430/haze1k  
+- Description: A large-scale dataset for haze removal, including various haze density levels.
+
+---
+
+### DHID (Dense Haze Image Dataset)
+- Repository: https://github.com/Shan-rs/DCI-Net  
+- Description: A dataset focused on dense haze conditions for challenging dehazing scenarios.
+
+---
+
+
 # Test
 ```bash
 python test.py 
@@ -72,4 +101,4 @@ If you find this work useful, please cite the paper:
 ```
 
 # Acknowledgement
-This code is built on [SFRDP-Net](https://github.com/789as-syl/SFRDP-Net), [MABDT](https://github.com/ningjin00/MABDT), [DS-RDMPD](https://github.com/Aaronwangz/DS-RDMPD) and [DA-Net](https://github.com/namwonss/DA-Net). We are thankful to the authors for sharing their code for reproducibility. We are also thankful to King Mongkut's University of Technology Thonburi for funding support for the fiscal year 2025-2026.
+This code is built on [SFRDP-Net](https://github.com/789as-syl/SFRDP-Net), [MABDT](https://github.com/ningjin00/MABDT), [DS-RDMPD](https://github.com/Aaronwangz/DS-RDMPD) and [DA-Net](https://github.com/namwonss/DA-Net).  We are very grateful for this excellent work. Their contributions laid the foundation for our advancements this field. We are also thankful to King Mongkut's University of Technology Thonburi for funding support for the fiscal year 2025-2026.
