@@ -91,6 +91,13 @@ python test.py
 python train.py 
 ```
 
+## Results
+
+<p align="center">
+  <img src="Images/Main_Model_Diagram.png" width="800"/>
+</p>
+
+
 # Citation
 If you find this work useful, please cite the paper:
 ```bash
