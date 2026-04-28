@@ -55,3 +55,21 @@ python test.py
 ```bash
 python train.py 
 ```
+
+# Citation
+If you find this work useful, please cite the paper:
+```bash
+@ARTICLE{11488354,
+  author={Sultan, Naveed and Hayat, Mansoor and Prom-on, Santitham},
+  journal={IEEE Transactions on Geoscience and Remote Sensing}, 
+  title={DSCH-Net: Diffusion-State-Contextual Hybrid Network for Physics-Inspired and Direction-Aware Dehazing of Remote Sensing Imagery}, 
+  year={2026},
+  volume={},
+  number={},
+  pages={1-1},
+  keywords={Earth Observing System;Sentinel-2;Satellite images;Landsat;Feeds;Broadcasting;Radio broadcasting;Broadcast technology;Frequency modulation;Filters;Single-image dehazing;physics-guided restoration;state-space modeling;diffusion prior;global context},
+  doi={10.1109/TGRS.2026.3685508}}
+```
+
+# Acknowledgement
+This code is built on [SFRDP-Net](https://github.com/789as-syl/SFRDP-Net), [MABDT](https://github.com/ningjin00/MABDT), [DS-RDMPD](https://github.com/Aaronwangz/DS-RDMPD) and [DA-Net](https://github.com/namwonss/DA-Net). We are thankful to the authors for sharing their code for reproducibility. We are also thankful to King Mongkut's University of Technology Thonburi for funding support for the fiscal year 2025-2026.
