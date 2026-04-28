@@ -1,0 +1,20 @@
+# Python version
+# Recommended: Python 3.10
+
+# Core deep learning framework (CUDA 11.7)
+torch==1.13.0+cu117
+torchvision==0.14.0+cu117
+torchaudio==0.13.0+cu117
+
+# Install PyTorch with CUDA 11.7 using:
+# pip install torch==1.13.0+cu117 torchvision==0.14.0+cu117 torchaudio==0.13.0 --extra-index-url https://download.pytorch.org/whl/cu117
+
+# Required libraries
+timm
+torchinfo
+numpy
+Pillow
+scikit-image
+tqdm
+ptflops
+pytorch-msssim
