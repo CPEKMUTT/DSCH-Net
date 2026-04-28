@@ -19,23 +19,39 @@ DSCH-Net/
 │   ├── RICE1/2
 │   ├── Haze1K
 │   ├── DHID
-│── datasets/
-│   ├── UCMerced/
-│   ├── AID/
-│   ├── RSCNN7
-│   ├── WHU-RS19
-│── models/
-│   ├── HiT-RSNet
-│   ├── SOTA Models
-│── Experiments
-│   ├── models/
-│   ├── results/
-│── training.py
-│── testing.py
-│── option.py
-│── utility.py
-│── metrices.py
+│── Pre_trained/
+│   ├── Model
+│── Output
+│   ├── dehazed_images
+│── Train.py
+│── Test.py
+│── Arguments.py
+│── Data_utils.py
+│── Metrices.py
+│── Loss.py
 │── DSCH_Net.py
 │── LICENSE
 │── CITATION.cff  # Citation info
+```
+
+
+# Environment and Dependencies
+```bash
+# create a new environment
+conda create -n dsch-net python=3.10
+
+# activate environment
+conda activate dsch-net
+
+# install dependencies
+pip install -r requirements.txt
+```
+
+#Test
+```bash
+python test.py 
+
+#Train model
+bash
+python train.py 
 ```
