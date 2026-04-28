@@ -50,8 +50,8 @@ pip install -r requirements.txt
 #Test
 ```bash
 python test.py 
-
+```
 #Train model
-bash
+```bash
 python train.py 
 ```
