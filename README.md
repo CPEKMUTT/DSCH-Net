@@ -9,6 +9,12 @@ Additionally, a multi-dilation residual block enhances fine textures and small s
 
 Extensive experiments demonstrate strong performance across multiple remote sensing datasets. DSCH-Net achieves up to 32.20 dB PSNR and 0.980 SSIM, outperforming existing methods. Overall, it provides an efficient, robust, and scalable solution for real-world remote sensing dehazing applications.
 
+## Model Architecture
+
+<p align="center">
+  <img src="Images/Main_Model_Diagram.png" width="800"/>
+</p>
+
 # Coding Hierarchy
 ```bash
 DSCH-Net/
