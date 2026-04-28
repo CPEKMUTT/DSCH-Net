@@ -94,8 +94,8 @@ python train.py
 ## Results
 
 <p align="center">
-  <img src="Images/Results_1K_L.png" width="800"/>
-  <img src="Images/Results_2K_L.png" width="800"/>
+  <img src="Images/Results_1K_1_L.png" width="800"/>
+  <img src="Images/Results_1K_2_L.png" width="800"/>
   <img src="Images/Results_ablation1_L.png" width="800"/>
   <img src="Images/Results_ablation2_L.png" width="800"/>
   <img src="Images/Results_Haloes_map_1.png" width="800"/>
