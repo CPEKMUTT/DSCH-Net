@@ -47,11 +47,11 @@ conda activate dsch-net
 pip install -r requirements.txt
 ```
 
-#Test
+# Test
 ```bash
 python test.py 
 ```
-#Train model
+# Train
 ```bash
 python train.py 
 ```
